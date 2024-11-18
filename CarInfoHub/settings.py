@@ -24,6 +24,7 @@ INSTALLED_APPS: List[str] = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'debug_toolbar',
+    'cars',
 ]
 
 MIDDLEWARE: List[str] = [
@@ -85,7 +86,7 @@ AUTH_PASSWORD_VALIDATORS: List[dict] = [
     },
 ]
 
-LANGUAGE_CODE: str = 'en-us'
+LANGUAGE_CODE: str = 'ru-RU'
 
 TIME_ZONE: str = 'UTC'
 

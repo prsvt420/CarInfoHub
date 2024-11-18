@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %} Редактирование автомобиля {% endblock %}
+
+{% block content %}
+
+<form method="post">{% csrf_token %}
+    <p>Вы уверены, что хотите удалить "{{ object }}"?</p>
+    {{ form }}
+    <button>Подтвердить</button>
+</form>
+
+{% endblock %}

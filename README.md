@@ -56,3 +56,35 @@ python manage.py migrate
 ```
 python manage.py runserver
 ```
+
+## URL
+
+**1. Viewing a list of cars:**
+
+```
+http://127.0.0.1:8000/cars/
+```
+
+**2. Viewing car details:**
+
+```
+http://127.0.0.1:8000/cars/<slug>/
+```
+
+**3. Update car details:**
+
+```
+http://127.0.0.1:8000/cars/update/<slug>/
+```
+
+**4. Creating a car:**
+
+```
+http://127.0.0.1:8000/cars/create/
+```
+
+**5. Removing a car:**
+
+```
+http://127.0.0.1:8000/cars/delete/<slug>/
+```
