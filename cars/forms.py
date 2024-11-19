@@ -5,7 +5,7 @@ from .models import Car, Comment
 class BaseCarForm(forms.ModelForm):
     class Meta:
         model: Car = Car
-        exclude: tuple = ('slug', 'created_at', 'updated_at')
+        exclude: tuple = ('owner', 'slug', 'created_at', 'updated_at')
 
 
 class CarForm(BaseCarForm):
@@ -13,8 +13,7 @@ class CarForm(BaseCarForm):
 
 
 class CarUpdateForm(BaseCarForm):
-    class Meta(BaseCarForm.Meta):
-        exclude: tuple = BaseCarForm.Meta.exclude + ('owner',)
+    pass
 
 
 class CommentForm(forms.ModelForm):

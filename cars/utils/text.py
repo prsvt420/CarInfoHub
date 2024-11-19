@@ -1,4 +1,4 @@
-from django.utils.text import slugify
+from pytils.translit import slugify
 import uuid
 
 
