@@ -25,6 +25,7 @@ INSTALLED_APPS: List[str] = [
     'django.contrib.staticfiles',
     'debug_toolbar',
     'cars',
+    'users',
 ]
 
 MIDDLEWARE: List[str] = [
@@ -101,3 +102,6 @@ STATICFILES_DIRS: List[Path] = [
 ]
 
 DEFAULT_AUTO_FIELD: str = 'django.db.models.BigAutoField'
+
+LOGIN_URL: str = 'users:login'
+LOGIN_REDIRECT_URL: str = 'cars:cars-list'

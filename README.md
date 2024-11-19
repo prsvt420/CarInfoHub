@@ -57,7 +57,9 @@ python manage.py migrate
 python manage.py runserver
 ```
 
-## URL
+## URLs
+
+### Cars
 
 **1. Viewing a list of cars:**
 
@@ -87,4 +89,24 @@ http://127.0.0.1:8000/cars/create/
 
 ```
 http://127.0.0.1:8000/cars/delete/<slug>/
+```
+
+### Users
+
+**1. Authorization:**
+
+```
+http://127.0.0.1:8000/users/login/
+```
+
+**2. Registration:**
+
+```
+http://127.0.0.1:8000/users/registration/
+```
+
+**3. Logout:**
+
+```
+http://127.0.0.1:8000/users/logout/
 ```

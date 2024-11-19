@@ -8,6 +8,7 @@ from CarInfoHub import settings
 
 urlpatterns: List[path] = [
     path('admin/', admin.site.urls),
+    path('users/', include('users.urls', namespace='users'), name='users'),
     path('cars/', include('cars.urls', namespace='cars'), name='cars'),
 ]
 
