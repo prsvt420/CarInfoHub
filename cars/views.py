@@ -1,16 +1,21 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.handlers.wsgi import WSGIRequest
+from django.db.models import QuerySet
 from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from rest_framework import viewsets
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 from cars.forms import CarForm, CommentForm, CarUpdateForm
 from cars.mixins import OwnerRequiredMixin
-from cars.models import Car
-from cars.services import CommentService
+from cars.models import Car, Comment
+from cars.permissions import IsOwnerOrReadOnly
+from cars.serializers import CarSerializer, CommentSerializer
+from cars.services import CommentService, CarService
 
 
 class CarListView(ListView):
@@ -56,6 +61,7 @@ class CarCreateView(LoginRequiredMixin, CreateView):
     success_url: str = reverse_lazy('cars:cars-list')
 
     def form_valid(self, form: CarForm) -> HttpResponse:
+        """Валидирует форму и сохраняет автомобиль."""
         form.instance.owner = self.request.user
         return super().form_valid(form)
 
@@ -74,3 +80,32 @@ class CarUpdateView(OwnerRequiredMixin, UpdateView):
 class CarDeleteView(OwnerRequiredMixin, DeleteView):
     model: Car = Car
     success_url: str = reverse_lazy('cars:cars-list')
+
+
+class CarViewSet(viewsets.ModelViewSet):
+    queryset: QuerySet[Car] = CarService.get_all_cars()
+    serializer_class: CarSerializer = CarSerializer
+    permission_classes: tuple = (
+        IsOwnerOrReadOnly,
+    )
+
+
+class CommentViewSet(viewsets.ModelViewSet):
+    serializer_class: CommentSerializer = CommentSerializer
+    permission_classes: tuple = (
+        IsAuthenticatedOrReadOnly,
+    )
+
+    def get_queryset(self) -> QuerySet[Comment]:
+        """Возвращает комментарии к автомобилю."""
+
+        car_id: int = self.kwargs['car_id']
+        comments = CommentService.get_comments_for_car_id(car_id)
+        return comments
+
+    def perform_create(self, serializer: CommentSerializer) -> None:
+        """Добавляет комментарий к автомобилю."""
+
+        car_id: int = self.kwargs['car_id']
+        car: Car = CarService.get_car_by_id(car_id)
+        serializer.save(car=car, author=self.request.user)

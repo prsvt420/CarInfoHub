@@ -110,3 +110,84 @@ http://127.0.0.1:8000/users/registration/
 ```
 http://127.0.0.1:8000/users/logout/
 ```
+
+### API
+
+**1. Getting a list of cars:**
+
+```
+GET http://127.0.0.1:8000/api/cars/
+```
+
+**2. Getting information about a specific
+car:**
+
+```
+GET http://127.0.0.1:8000/api/cars/<id>/
+```
+
+**3. Creating a new car:**
+
+```
+POST http://127.0.0.1:8000/api/cars/
+```
+
+**4. Updating information about
+the car:**
+
+```
+PUT http://127.0.0.1:8000/api/cars/<id>/
+```
+
+**5. Removing a car:**
+
+```
+DELETE http://127.0.0.1:8000/api/cars/<id>/
+```
+
+**6. Getting comments on the car:**
+
+```
+GET http://127.0.0.1:8000/api/cars/<id>/comments/ 
+```
+
+**6. Adding a new comment to the car:**
+
+```
+POST http://127.0.0.1:8000/api/cars/<id>/comments/ 
+```
+
+**7. Adding a new comment to the car:**
+
+```
+POST http://127.0.0.1:8000/api/cars/<id>/comments/ 
+```
+
+**8. Registration:**
+
+```
+POST http://127.0.0.1:8000/api/auth/users/
+```
+
+**9. Create a token:**
+
+```
+POST http://127.0.0.1:8000/api/token/login/
+```
+
+**8. Removing a token:**
+
+```
+POST http://127.0.0.1:8000/api/token/logout/
+```
+
+**9. Get a personal account:**
+
+```
+GET http://127.0.0.1:8000/api/users/me/
+```
+
+**More detailed:**
+```
+GET http://127.0.0.1:8000/api/swagger/
+```

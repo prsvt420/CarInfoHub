@@ -24,6 +24,10 @@ INSTALLED_APPS: List[str] = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'debug_toolbar',
+    'rest_framework',
+    'rest_framework.authtoken',
+    'drf_yasg',
+    'djoser',
     'cars',
     'users',
 ]
@@ -105,3 +109,24 @@ DEFAULT_AUTO_FIELD: str = 'django.db.models.BigAutoField'
 
 LOGIN_URL: str = 'users:login'
 LOGIN_REDIRECT_URL: str = 'cars:cars-list'
+
+REST_FRAMEWORK: dict = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    )
+}
+
+DJOSER: dict = {
+    'LOGIN_FIELD': 'username',
+}
+
+SWAGGER_SETTINGS: dict = {
+    'SECURITY_DEFINITIONS': {
+        'Token': {
+            'type': 'apiKey',
+            'name': 'Authorization',
+            'in': 'header'
+        }
+    }
+}
