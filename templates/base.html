@@ -1,10 +1,18 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}{% endblock %}</title>
+    <title>CarinfoHub - {% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="icon" href="{% static 'img/carinfohub-ico.svg' %}">
+    {% block css %}{% endblock %}
 </head>
 <body>
-{% block content %}{% endblock %}
+    <div id="app">
+            {% include 'includes/header.html' %}
+            <main>{% block content %}{% endblock %}</main>
+            {% include 'includes/footer.html' %}
+    </div>
 </body>
 </html>

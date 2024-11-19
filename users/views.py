@@ -4,6 +4,7 @@ from django.contrib.auth.views import LoginView
 from django.core.handlers.wsgi import WSGIRequest
 from django.http import HttpResponse
 from django.shortcuts import redirect
+from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import CreateView
 
@@ -17,6 +18,7 @@ class UserLoginView(LoginView):
 class UserRegistrationView(CreateView):
     form_class: UserCreationForm = UserCreationForm
     template_name: str = 'users/registration.html'
+    success_url: str = reverse_lazy('users:login')
 
 
 class UserLogoutView(View):

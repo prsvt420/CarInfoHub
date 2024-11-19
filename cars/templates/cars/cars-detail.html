@@ -1,37 +1,45 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %} {{ car.make }} {{ car.model }} {{ car.year }} {% endblock %}
+{% block css %}<link rel="stylesheet" href="{% static 'css/cars-detail.css' %}">{% endblock %}
 
 {% block content %}
-    <h1>{{ car.make }} {{ car.model }}</h1>
+    <h1 class="car-title">{{ car.make }} {{ car.model }}</h1>
+    <div class="car-info">
+        <p>Марка: {{ car.make }}</p>
+        <p>Модель: {{ car.model }}</p>
+        <p>Год выпуска: {{ car.year }}</p>
+        <p>Описание: {{ car.description }}</p>
+        <p>Владелец: {{ car.owner }}</p>
+    </div>
 
-    <p>Марка: {{ car.make }}</p>
-    <p>Модель: {{ car.model }}</p>
-    <p>Год выпуска: {{ car.year }}</p>
-    <p>Описание: {{ car.description }}</p>
-    <p>Владелец: {{ car.owner }}</p>
+    <div class="buttons">
+        {% if request.user == car.owner %}
+        <a href="{% url 'cars:cars-update' car.slug %}">Редактировать</a>
+        <br>
+        <a href="{% url 'cars:cars-delete' car.slug %}">Удалить</a>
+        {% endif %}
+    </div>
+    <div class="comments">
+        <p class="comments-title">Комментарии:</p>
+        
+        {% for comment in comments %}
+        <div class="comment">
+            <p><span class="comment-author">{{ comment.author }}</span> <span class="comment-date">{{ comment.created_at }}</span></p>
+            <p>{{ comment.content }}</p>
+        </div>
 
-    <hr>
+            <hr>
+        {% endfor %}
 
-    {% if request.user == car.owner %}
-    <a href="{% url 'cars:cars-update' car.slug %}">Редактировать</a>
-    <br>
-    <a href="{% url 'cars:cars-delete' car.slug %}">Удалить</a>
-    {% endif %}
+        <form action="" method="POST">
+            {% csrf_token %}
 
-    <hr>
-    <h2>Комментарии:</h2>
-    {% for comment in comments %}
-        <p>{{ comment.content }}</p>
-        <p>Автор: {{ comment.author }}</p>
-        <p>Дата создания: {{ comment.created_at }}</p>
-        <hr>
-    {% endfor %}
+            <textarea type="text" name="content"></textarea>
 
-    <h3>Добавить комментарий:</h3>
-    <form action="" method="POST">
-        {% csrf_token %}
-        {{ comment_form.as_p }}
-        <button type="submit">Добавить комментарий</button>
-    </form>
+            <button type="submit">Добавить</button>
+        </form>
+    </div>
+    
 {% endblock %}

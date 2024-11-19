@@ -1,34 +1,22 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Автомобили{% endblock %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/cars-list.css' %}">
+{% endblock %}
 
 {% block content %}
-    <h1>Автомобили</h1>
-    <hr>
-    {% for car in cars_list %}
-        <h2><a href="{{ car.get_absolute_url }}">{{ car.make }} {{ car.model }}</a></h2>
-        <hr>
-    {% endfor %}
-
-    <h2><a href="{% url 'cars:cars-create' %}">Добавить автомобиль</a></h2>
-
-    <h2>
-        <ul style="display: flex; justify-content: center; gap: 10px; list-style: none">
-            {% if page_obj.has_previous %}
-                <li><a href="?page={{ page_obj.previous_page_number }}">←</a></li>
-            {% endif %}
-
-            {% for page in page_obj.paginator.page_range %}
-                {% if page == page_obj.number %}
-                    <li><a href="?page={{ page }}">{{ page }}</a></li>
-                {% elif page >= page_obj.number|add:-3 and page <= page_obj.number|add:3 %}
-                    <li><a href="?page={{ page }}">{{ page }}</a></li>
-                {% endif %}
+            <nav>
+                <a href="{% url 'cars:cars-create' %}">Добавить автомобиль</a>
+            </nav>
+            {% for car in cars_list %}
+                <article onclick="location.href='{% url 'cars:cars-detail' slug=car.slug %}';">
+                    <h2>{{ car.make }} {{ car.model }} {{ car.year }}</h2>
+                </article>
             {% endfor %}
 
-            {% if page_obj.has_next %}
-                <li><a href="?page={{ page_obj.next_page_number }}">→</a></li>
+            {% if cars_list|length > 3 %}
+                {% include 'includes/pagination.html' %}
             {% endif %}
-        </ul>
-    </h2>
 {% endblock %}

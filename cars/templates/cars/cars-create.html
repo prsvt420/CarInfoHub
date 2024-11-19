@@ -1,11 +1,20 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %} Добавление автомобиля {% endblock %}
+{% block css %}<link rel="stylesheet" href="{% static 'css/cars-form.css' %}">{% endblock %}
 
 {% block content %}
 <form method="POST">
     {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Сохранить">
+
+    <div class="fields">
+        {% for field in form %}
+            {% if field.errors %}<span>{{ field.errors }}</span>{% endif %}
+            {{ field.label}} {{ field }}
+        {% endfor %}
+    </div>
+
+    <button>Добавить</button>
 </form>
 {% endblock %}

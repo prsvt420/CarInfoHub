@@ -1,13 +1,27 @@
 {% extends 'base.html' %}
+{% load static %}
 
 
 {% block title %}Авторизация{% endblock %}
+{% block css %}<link rel="stylesheet" href="{% static 'css/auth-form.css' %}">{% endblock %}
+
 
 {% block content %}
-    <h1>Авторизация</h1>
+    <p>Авторизация</p>
     <form method="post">
         {% csrf_token %}
-        {{ form.as_p }}
+
+        <span>{{ form.non_field_errors }}</span>
+        <div class="fields">
+            {% for field in form %}
+            {% if field.errors %}<span>{{ field.errors }}</span>{% endif %}
+            {{ field.label}} {{ field }}
+        {% endfor %}
+        </div>
+
+        
         <button type="submit">Войти</button>
+
+        <p>Нет аккаунта? <a href="{% url 'users:registration' %}">Зарегистрироваться</a></p>
     </form>
 {% endblock %}

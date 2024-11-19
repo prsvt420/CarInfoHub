@@ -1,0 +1,46 @@
+main {
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+}
+
+input {
+    width: 300px;
+    height: 40px;
+    border-radius: 5px;
+    border: 1px solid gray;
+    padding: 5px;
+    font-size: 20px;
+}
+
+button {
+    width: 250px;
+    height: 40px;
+    border-radius: 5px;
+    border: 1px solid gray;
+    background-color: rgb(67, 67, 67);
+    color: white;
+    font-size: 20px;
+    margin: 10px 0;
+}
+
+textarea {
+    width: 300px;
+    height: 100px;
+    border-radius: 5px;
+    border: 1px solid gray;
+    padding: 5px;
+    font-size: 20px;
+}
+
+.errorlist, .nonfield {
+    color: red;
+    font-size: 15px;
+    margin: 10px 0;
+}
+
+.fields {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}

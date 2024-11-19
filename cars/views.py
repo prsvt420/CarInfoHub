@@ -7,8 +7,8 @@ from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
-from cars.mixins import OwnerRequiredMixin
 from cars.forms import CarForm, CommentForm, CarUpdateForm
+from cars.mixins import OwnerRequiredMixin
 from cars.models import Car
 from cars.services import CommentService
 
@@ -54,6 +54,10 @@ class CarCreateView(LoginRequiredMixin, CreateView):
     template_name: str = 'cars/cars-create.html'
     form_class: CarForm = CarForm
     success_url: str = reverse_lazy('cars:cars-list')
+
+    def form_valid(self, form: CarForm) -> HttpResponse:
+        form.instance.owner = self.request.user
+        return super().form_valid(form)
 
 
 class CarUpdateView(OwnerRequiredMixin, UpdateView):
